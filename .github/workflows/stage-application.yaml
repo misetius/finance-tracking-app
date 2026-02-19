@@ -65,4 +65,4 @@ jobs:
         with:
           add: 'kustomization.yaml'
           message: New version released ${{ github.sha }}
-          cwd: './staging'
+          cwd: 'overlays/staging'
