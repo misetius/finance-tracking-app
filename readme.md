@@ -43,7 +43,7 @@ The application is fully containerized and deployed to Kubernetes as part of Dev
 - Kubernetes Secrets
 - Deployment & Service manifests
 
-
+---
 Note: The analytics service is included **purely for Kubernetes and microservices practice purposes**.
 
 In a real-world application of this size, the analytics logic (such as average calculations) would typically be implemented directly inside the main backend service. Creating a separate container for this functionality would be unnecessary and would add extra complexity.
