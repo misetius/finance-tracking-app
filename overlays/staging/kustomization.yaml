@@ -8,4 +8,4 @@ namePrefix: staging-
 images:
 - name: project/image
   newName: misetius/backend
-  newTag: 65d2f889fa34e13fd6b61b2f74b1e2c85b05365d
+  newTag: 8e67482f4e3bf061f3d6265d05de148639498057
