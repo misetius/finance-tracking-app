@@ -1,0 +1,28 @@
+services:
+  backend:
+    image: misetius/backend:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - DATABASE_HOST=postgres
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=finance_db
+    depends_on:
+      - postgres
+
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: finance_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+

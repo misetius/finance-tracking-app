@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: project
+  name: Finance Web App
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: finance-web-app
+  template:
+    metadata:
+      labels:
+        app: finance-web-app  
+    spec:
+      containers: 
+        - name: backend
+          image: project/image
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: 3001
+            - name: DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: database-host
+                  key: database-hostname
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: database-user
+                  key: database-username 
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-password
+                  key: database-passworduser
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: database-name
+                  key: database-name   
+          ports:
+            - containerPort: 3001
