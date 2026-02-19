@@ -6,9 +6,6 @@ resources:
 namePrefix: staging-
 
 images:
-- name: PROJECT/IMAGE
-  newName: misetius/finance-tracking
-  newTag: latest
 - name: project/image
   newName: misetius/backend
   newTag: 0eade3573ba4a29ff87c459003ff1e26d31a2dc5
