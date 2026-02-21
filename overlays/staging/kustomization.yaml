@@ -1,11 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../base/
+- ../../base
 
-namePrefix: staging-
 
 images:
 - name: project/image
   newName: misetius/backend
-  newTag: 65d2f889fa34e13fd6b61b2f74b1e2c85b05365d
+  newTag: test

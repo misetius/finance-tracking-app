@@ -5,6 +5,8 @@ This project is created for learning purposes, with a focus on practicing **Dock
 
 ---
 
+## THIS APP IS IN DEVELOPMENT AT THE MOMENT
+
 ##  Overview
 
 Finance Tracking App allows users to:

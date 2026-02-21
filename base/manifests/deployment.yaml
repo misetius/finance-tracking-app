@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: project
-  name: Finance Web App
+  name: finance-web-app
 spec:
   replicas: 1 
   selector:
@@ -19,7 +19,9 @@ spec:
           imagePullPolicy: Always
           env:
             - name: PORT
-              value: 3001
+              value: "3001"
+            - name: DATABASE_PORT
+              value: "5432"
             - name: DATABASE_HOST
               valueFrom:
                 secretKeyRef:
@@ -40,5 +42,5 @@ spec:
                 secretKeyRef:
                   name: database-name
                   key: database-name   
-          ports:
-            - containerPort: 3001
+
+        

@@ -1,6 +1,6 @@
 services:
   backend:
-    image: misetius/backend:latest
+    image: misetius/backend:test
     ports:
       - "8000:8000"
     environment:
@@ -26,3 +26,5 @@ services:
 
 
 
+volumes:
+  postgres_data:

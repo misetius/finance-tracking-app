@@ -8,6 +8,6 @@ namePrefix: production-
 images:
 - name: PROJECT/IMAGE
   newName: misetius/finance-tracking
-  newTag: latest
+  newTag: test
 
 

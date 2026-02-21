@@ -1,4 +1,5 @@
 from flask import Flask, request
+import time
 import psycopg2
 import os
 
@@ -7,14 +8,43 @@ import os
 app = Flask(__name__)
 
 
-conn = psycopg2.connect(database=os.getenv("DATABASE_NAME"), user=os.getenv("DATABASE_USER"),
-                        password=os.getenv("DATABASE_PASSWORD"), host=os.getenv("DATABASE_HOST"), port=os.getenv("DATABASE_PORT"))
-cur = conn.cursor()
+def wait_for_db(max_retries=10, delay=3):
+    for attempt in range(max_retries):
+        try:
+            conn = psycopg2.connect(
+                database=os.getenv("DATABASE_NAME"),
+                user=os.getenv("DATABASE_USER"),
+                password=os.getenv("DATABASE_PASSWORD"),
+                host=os.getenv("DATABASE_HOST"),
+                port=os.getenv("DATABASE_PORT"),
+            )
+            print("Database connection successful")
+            return conn
+        except psycopg2.OperationalError as e:
+            print(f"Database not ready, retrying... ({attempt+1}/{max_retries})")
+            time.sleep(delay)
 
-cur.execute('''CREATE TABLE IF NOT EXISTS products (id serial  PRIMARY KEY, category  varchar(100), product varchar(100) , price float, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);''')
+    raise Exception("Could not connect to database after multiple attempts")
 
-cur.close()
-conn.close()
+
+def init_db():
+    conn = wait_for_db()
+    cur = conn.cursor()
+
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS products (
+            id serial PRIMARY KEY,
+            category varchar(100),
+            product varchar(100),
+            price float,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    """)
+
+    conn.commit()  
+    cur.close()
+    conn.close()
+    print("Table ensured.")
 
 
 
@@ -52,7 +82,9 @@ def add_data_to_table():
     conn.close()
     return {'message': 'Data added successfully'}
 
+
 if __name__ == '__main__':
+    init_db()
     app.run(host="0.0.0.0", port=os.getenv("PORT"))
 
   

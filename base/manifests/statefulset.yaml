@@ -17,24 +17,24 @@ spec:
      
       containers:
         - name: database
-          image: postgres
+          image: postgres:17.8-alpine3.22
           env:
-            - name: DATABASE
+            - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
                   name: database-name
                   key: database-name
-            - name: PASSWORD
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: database-password
                   key: database-passworduser
-            - name: HOST
+            - name: POSTGRES_HOST
               valueFrom:
                 secretKeyRef:
                   name: database-host
                   key: database-hostname
-            - name: USER
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: database-user
@@ -49,7 +49,7 @@ spec:
             containerPort: 5432
           volumeMounts:
           - name: data2
-            mountPath: /data
+            mountPath: /var/lib/postgresql/data
   volumeClaimTemplates:
   - metadata:
       name: data2

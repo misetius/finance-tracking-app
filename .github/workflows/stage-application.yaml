@@ -24,8 +24,8 @@ jobs:
 
 #      - name: Build and push Docker image
 #        run: |-
-#          docker build --tag "misetius/backend:latest" backend
-#          docker push "misetius/backend:latest"
+#          docker build --tag "misetius/backend:test" backend
+#          docker push "misetius/backend:test"
 
 #      - name: Run tests with Docker Compose
 #        run: |-
