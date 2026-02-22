@@ -27,12 +27,9 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: database-password
-                  key: database-passworduser
+                  key: database-password
             - name: POSTGRES_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: database-host
-                  key: database-hostname
+              value: database      
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:

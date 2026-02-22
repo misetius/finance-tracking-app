@@ -32,7 +32,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: database-password
-                  key: database-passworduser
+                  key: database-password
             - name: DATABASE_NAME
               valueFrom:
                 secretKeyRef:
