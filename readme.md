@@ -7,6 +7,16 @@ This project is created for learning purposes, with a focus on practicing **Dock
 
 ## THIS APP IS IN DEVELOPMENT AT THE MOMENT
 
+You can quickly try the app with docker compose file. For this you obviously need to have installed docker.
+
+You can run this file with command while in the same directory as the file on the command line:
+
+```
+docker compose up
+```
+
+---
+
 ##  Overview
 
 Finance Tracking App allows users to:
