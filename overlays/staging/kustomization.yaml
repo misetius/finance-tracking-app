@@ -10,4 +10,4 @@ resources:
 images:
 - name: project/image
   newName: misetius/backend
-  newTag: 17736ba0b4479c9c4990f2ec92fc9088a1c776a3
+  newTag: 8d9c5fbfb3608ad59e1fd8c85b4f6f5416d1b0b3
