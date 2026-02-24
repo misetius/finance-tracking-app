@@ -1,6 +1,7 @@
 services:
   backend:
     image: misetius/backend:test
+    imagePullPolicy: Always
     ports:
       - "8000:8000"
     environment:

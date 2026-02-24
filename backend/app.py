@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import time
 import psycopg2
 import os
@@ -62,7 +62,7 @@ def get_all_data_from_tables():
     return {'data': rows}
 
 
-@app.route('/add_data', methods=['POST'])
+@app.route('/add-product', methods=['POST'])
 def add_data_to_table():
 
 
@@ -70,17 +70,17 @@ def add_data_to_table():
                         password=os.getenv("DATABASE_PASSWORD"), host=os.getenv("DATABASE_HOST"), port=os.getenv("DATABASE_PORT"))
 
     cur = conn.cursor()
-
-    category = request.form['category']
-    product = request.form['product']
-    price = request.form['price']
-
+    data = request.get_json()
+    category = data.get("category") 
+    product = data.get("product")
+    price = data.get("price")
+        
 
     cur.execute("INSERT INTO products (category, product, price) VALUES (%s, %s, %s)", (category, product, price))
     conn.commit()
     cur.close()
     conn.close()
-    return {'message': 'Data added successfully'}
+    return {'message': 'Product added successfully'}, 201
 
 
 if __name__ == '__main__':
