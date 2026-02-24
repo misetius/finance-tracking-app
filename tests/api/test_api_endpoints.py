@@ -27,9 +27,9 @@ def test_get_all_products():
     response = s.get(url)
     assert response.status_code == 200
     data = response.json()
-    assert data[0]["category"] == "Electronics"
-    assert data[0]["product"] == "Smartphone"
-    assert data[0]["price"] == 699.99
+    assert data["data"][0]["category"] == "Electronics"
+    assert data["data"][0]["product"] == "Smartphone"
+    assert data["data"][0]["price"] == 699.99
     
 
 
