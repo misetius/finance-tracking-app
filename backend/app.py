@@ -54,12 +54,12 @@ def get_all_data_from_tables():
     conn = psycopg2.connect(database=os.getenv("DATABASE_NAME"), user=os.getenv("DATABASE_USER"),
                         password=os.getenv("DATABASE_PASSWORD"), host=os.getenv("DATABASE_HOST"), port=os.getenv("DATABASE_PORT"))
 
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute("SELECT * FROM products")
     rows = cur.fetchall()
     cur.close()
     conn.close()
-    return {'data': rows}
+    return jsonify({'data': rows})
 
 
 @app.route('/add-product', methods=['POST'])
@@ -74,7 +74,7 @@ def add_data_to_table():
     category = data.get("category") 
     product = data.get("product")
     price = data.get("price")
-        
+
 
     cur.execute("INSERT INTO products (category, product, price) VALUES (%s, %s, %s)", (category, product, price))
     conn.commit()
