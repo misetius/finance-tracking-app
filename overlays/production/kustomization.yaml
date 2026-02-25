@@ -7,7 +7,7 @@ namePrefix: production-
 
 images:
 - name: PROJECT/IMAGE
-  newName: misetius/finance-tracking:production
+  newName: misetius/backend
   newTag: latest
   
 
