@@ -6,7 +6,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # ---------- Development ----------
 FROM base AS development
-COPY . .
+COPY app.py .
 RUN pip install debugpy
 ENV FLASK_ENV=development
 CMD ["python","app.py" ]
