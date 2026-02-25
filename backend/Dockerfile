@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 FROM base AS development
 RUN pip install debugpy
 ENV FLASK_ENV=development
-CMD ["flask","app.py" ,"run"]
+CMD ["python", "app.py" ]
 
 # ---------- Production ----------
 FROM base AS production

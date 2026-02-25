@@ -9,7 +9,7 @@ FROM base AS development
 COPY . .
 RUN pip install debugpy
 ENV FLASK_ENV=development
-CMD ["flask","app.py" ,"run"]
+CMD ["python","app.py" ]
 
 # ---------- Production ----------
 FROM base AS production
