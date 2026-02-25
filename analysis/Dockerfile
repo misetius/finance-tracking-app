@@ -6,11 +6,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # ---------- Development ----------
 FROM base AS development
+COPY . .
 RUN pip install debugpy
 ENV FLASK_ENV=development
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["flask","app.py" ,"run"]
 
 # ---------- Production ----------
 FROM base AS production
 ENV FLASK_ENV=production
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8000", "--workers", "4"]
+CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8001", "--workers", "4"]
