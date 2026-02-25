@@ -31,7 +31,13 @@ def test_get_all_products():
     assert data["data"][0]["product"] == "Smartphone"
     assert data["data"][0]["price"] == 699.99
     
-
+def test_calculate_sums_by_category():
+    s = requests.Session()
+    url = "http://localhost:8000/sums-by-category"
+    response = s.get(url)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["data"]["Electronics"] == 699.99
 
 
 

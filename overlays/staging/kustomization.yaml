@@ -8,6 +8,7 @@ resources:
 
 
 images:
-- name: project/image
-  newName: misetius/backend
-  newTag: 17736ba0b4479c9c4990f2ec92fc9088a1c776a3
+- name: backend/image
+  newName: misetius/backend:development
+- name: analysis/image
+  newName: misetius/analysis:development

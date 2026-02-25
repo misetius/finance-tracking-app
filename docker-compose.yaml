@@ -1,9 +1,10 @@
 services:
   backend:
-    image: misetius/backend:test
+    image: misetius/backend:development-test
     ports:
       - "8000:8000"
     environment:
+      - ANALYSIS_HOST=http://analysis:8001/sums-by-category
       - PORT=8000
       - DATABASE_HOST=postgres
       - DATABASE_USER=user
@@ -23,6 +24,19 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  analysis:
+    image: misetius/analysis:development-test
+    ports:
+      - "8001:8001"
+    environment:
+      - PORT=8001
+      - DATABASE_HOST=postgres
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=finance_db
+    depends_on:
+      - postgres
 
 
 

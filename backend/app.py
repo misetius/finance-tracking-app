@@ -1,12 +1,21 @@
 from flask import Flask, request, jsonify
+import requests
 import time
 import psycopg2
 import psycopg2.extras
 import os
 
-
-
 app = Flask(__name__)
+
+env = os.environ.get("DEVELOPMENT_OR_PRODUCTION")
+
+if env == "production":
+    app.config["DEBUG"] = False
+    secret = os.getenv("SECRET_KEY")
+    if not secret:
+        raise Exception("SECRET_KEY environment variable is required in production")
+else:
+    app.config["DEBUG"] = True
 
 
 def wait_for_db(max_retries=10, delay=3):
@@ -82,6 +91,11 @@ def add_data_to_table():
     cur.close()
     conn.close()
     return {'message': 'Product added successfully'}, 201
+
+@app.route('/sums-by-category', methods=['GET'])
+def get_sums_by_category():
+    response = requests.get(os.getenv("ANALYSIS_SERVICE_URL") + "/sums-by-category")
+    return jsonify(response.json())
 
 
 if __name__ == '__main__':

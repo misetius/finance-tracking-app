@@ -14,9 +14,11 @@ spec:
     spec:
       containers: 
         - name: backend
-          image: project/image
+          image: backend/image
           imagePullPolicy: Always
           env:
+            - name: analysis_host
+              value: "http://analysis-svc:2346/"
             - name: PORT
               value: "3001"
             - name: DATABASE_PORT
@@ -38,5 +40,31 @@ spec:
                 secretKeyRef:
                   name: database-name
                   key: database-name   
+        - name: analysis
+          image: analysis/image
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: "3002"
+            - name: DATABASE_PORT
+              value: "5432"
+            - name: DATABASE_HOST
+              value: "database"
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: database-user
+                  key: database-username 
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-password
+                  key: database-password
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: database-name
+                  key: database-name
+
 
         
