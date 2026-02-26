@@ -4,7 +4,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - ANALYSIS_HOST=http://analysis:8001/sums-by-category
+      - ANALYSIS_SERVICE_URL=http://analysis:8001/sums-by-category
       - PORT=8000
       - DATABASE_HOST=postgres
       - DATABASE_USER=user
