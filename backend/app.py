@@ -98,6 +98,19 @@ def get_sums_by_category():
     return jsonify(response.json())
 
 
+@app.route('/delete-product/<int:product_id>', methods=['DELETE'])
+def delete_product(product_id):
+    conn = psycopg2.connect(database=os.getenv("DATABASE_NAME"), user=os.getenv("DATABASE_USER"),
+                        password=os.getenv("DATABASE_PASSWORD"), host=os.getenv("DATABASE_HOST"), port=os.getenv("DATABASE_PORT"))
+
+    cur = conn.cursor()
+    cur.execute("DELETE FROM products WHERE id = %s", (product_id,))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return {'message': 'Product deleted successfully'}, 200
+
+
 if __name__ == '__main__':
     init_db()
     app.run(host="0.0.0.0", port=os.getenv("PORT"))

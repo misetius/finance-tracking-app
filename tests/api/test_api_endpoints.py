@@ -34,6 +34,7 @@ def test_get_all_products():
 
     s.post(post_url, json=payload)
     response = s.get(get_url)
+    print(response.json())
     assert response.status_code == 200
     data = response.json()
     assert data["data"][0]["category"] == "electronics"
@@ -63,4 +64,11 @@ def test_calculate_sums_by_category():
     assert data["data"][1]["total_price"] == 699.99
 
 
-
+def test_delete_product():
+    s = requests.Session()
+    response_id = s.get("http://localhost:8000").json()["data"][0]["id"]
+    delete_url = f"http://localhost:8000/delete-product/{response_id}"
+    response = s.delete(delete_url)
+    
+    assert response.status_code == 200
+    assert len(s.get("http://localhost:8000").json()["data"]) == 1
