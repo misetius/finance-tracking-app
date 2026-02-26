@@ -59,8 +59,8 @@ def test_calculate_sums_by_category():
     assert response.status_code == 200
     data = response.json()
     print(data)
-    assert data["data"][0]["total_price"] == 699.99
-    assert data["data"][1]["total_price"] == 6.98
+    assert data["data"][0]["total_price"] == 6.98
+    assert data["data"][1]["total_price"] == 699.99
 
 
 
