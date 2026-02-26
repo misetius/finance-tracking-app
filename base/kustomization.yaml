@@ -1,7 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- manifests/deployment.yaml
+- manifests/backend-deployment.yaml
+- manifests/analysis-deployment.yaml
 - manifests/statefulset.yaml
 - manifests/service-for-backend.yaml
 - manifests/service-for-analysis.yaml
