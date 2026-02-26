@@ -11,3 +11,6 @@ images:
 - name: project/image
   newName: misetius/backend
   newTag: 8d9c5fbfb3608ad59e1fd8c85b4f6f5416d1b0b3
+- name: analysis/image
+  newName: misetius/analysis
+  newTag: 8d9c5fbfb3608ad59e1fd8c85b4f6f5416d1b0b3
