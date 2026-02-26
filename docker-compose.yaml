@@ -13,18 +13,6 @@ services:
     depends_on:
       - postgres
 
-
-  postgres:
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: finance_db
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
   analysis:
     image: misetius/analysis:development-test
     ports:
@@ -37,6 +25,20 @@ services:
       - DATABASE_NAME=finance_db
     depends_on:
       - postgres
+
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: finance_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
 
 
 

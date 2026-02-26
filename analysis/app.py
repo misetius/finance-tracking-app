@@ -16,12 +16,12 @@ if env == "production":
 else:
     app.config["DEBUG"] = True
 
-app.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def check_health():
     return jsonify({'message': 'API is running'}), 200
 
 
-app.route('/sums-by-category', methods=['GET'])
+@app.route('/sums-by-category', methods=['GET'])
 def get_sums_by_category():
     conn = psycopg2.connect(database=os.getenv("DATABASE_NAME"), user=os.getenv("DATABASE_USER"),
                         password=os.getenv("DATABASE_PASSWORD"), host=os.getenv("DATABASE_HOST"), port=os.getenv("DATABASE_PORT"))
