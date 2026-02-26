@@ -3,6 +3,8 @@ kind: Kustomization
 resources:
 - manifests/deployment.yaml
 - manifests/statefulset.yaml
-- manifests/service.yaml
+- manifests/service-for-backend.yaml
+- manifests/service-for-analysis.yaml
+
 
 

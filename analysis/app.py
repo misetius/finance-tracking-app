@@ -16,6 +16,10 @@ if env == "production":
 else:
     app.config["DEBUG"] = True
 
+app.route('/', methods=['GET'])
+def check_health():
+    return jsonify({'message': 'API is running'}), 200
+
 
 app.route('/sums-by-category', methods=['GET'])
 def get_sums_by_category():
