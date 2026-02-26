@@ -23,21 +23,44 @@ def test_add_product():
 
 def test_get_all_products():
     s = requests.Session()
-    url = "http://localhost:8000"
-    response = s.get(url)
+    get_url = "http://localhost:8000"
+    post_url = "http://localhost:8000/add-product"
+
+    payload = {
+        "category": "Drinks",
+        "product": "Coffee",
+        "price": 3.99
+    }
+
+    s.post(post_url, json=payload)
+    response = s.get(get_url)
     assert response.status_code == 200
     data = response.json()
     assert data["data"][0]["category"] == "Electronics"
     assert data["data"][0]["product"] == "Smartphone"
     assert data["data"][0]["price"] == 699.99
+    assert data["data"][1]["category"] == "Drinks"
+    assert data["data"][1]["product"] == "Coffee"
+    assert data["data"][1]["price"] == 3.99
     
 def test_calculate_sums_by_category():
     s = requests.Session()
-    url = "http://localhost:8000/sums-by-category"
-    response = s.get(url)
+
+    payload = {
+        "category": "Drinks",
+        "product": "Tea",
+        "price": 2.99
+    }
+    s.post("http://localhost:8000/add-product", json=payload)
+
+    sum_url = "http://localhost:8000/sums-by-category"
+    
+    response = s.get(sum_url)
     assert response.status_code == 200
     data = response.json()
-    assert data["data"]["Electronics"] == 699.99
+    print(data)
+    assert data["data"][0]["total_price"] == 699.99
+    assert data["data"][1]["total_price"] == 6.98
 
 
 

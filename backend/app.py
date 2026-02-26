@@ -86,7 +86,7 @@ def add_data_to_table():
     price = data.get("price")
 
 
-    cur.execute("INSERT INTO products (category, product, price) VALUES (%s, %s, %s)", (category, product, price))
+    cur.execute("INSERT INTO products (category, product, price) VALUES (%s, %s, %s)", (category.lower(), product.lower(), price))
     conn.commit()
     cur.close()
     conn.close()
