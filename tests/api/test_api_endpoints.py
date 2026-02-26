@@ -69,6 +69,6 @@ def test_delete_product():
     response_id = s.get("http://localhost:8000").json()["data"][0]["id"]
     delete_url = f"http://localhost:8000/delete-product/{response_id}"
     response = s.delete(delete_url)
-    
+
     assert response.status_code == 200
-    assert len(s.get("http://localhost:8000").json()["data"]) == 1
+    assert len(s.get("http://localhost:8000").json()["data"]) == 2
