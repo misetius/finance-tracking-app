@@ -36,11 +36,11 @@ def test_get_all_products():
     response = s.get(get_url)
     assert response.status_code == 200
     data = response.json()
-    assert data["data"][0]["category"] == "Electronics"
-    assert data["data"][0]["product"] == "Smartphone"
+    assert data["data"][0]["category"] == "electronics"
+    assert data["data"][0]["product"] == "smartphone"
     assert data["data"][0]["price"] == 699.99
-    assert data["data"][1]["category"] == "Drinks"
-    assert data["data"][1]["product"] == "Coffee"
+    assert data["data"][1]["category"] == "drinks"
+    assert data["data"][1]["product"] == "coffee"
     assert data["data"][1]["price"] == 3.99
     
 def test_calculate_sums_by_category():
