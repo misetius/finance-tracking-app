@@ -111,6 +111,28 @@ def delete_product(product_id):
     return {'message': 'Product deleted successfully'}, 200
 
 
+@app.route('/update-product/<int:product_id>', methods=['PUT'])
+def update_product(product_id):
+    conn = psycopg2.connect(database=os.getenv("DATABASE_NAME"), user=os.getenv("DATABASE_USER"),
+                        password=os.getenv("DATABASE_PASSWORD"), host=os.getenv("DATABASE_HOST"), port=os.getenv("DATABASE_PORT"))
+
+    cur = conn.cursor()
+    data = request.get_json()
+    category = data.get("category") 
+    product = data.get("product")
+    price = data.get("price")
+
+    cur.execute("""
+        UPDATE products 
+        SET category = %s, product = %s, price = %s 
+        WHERE id = %s
+    """, (category.lower(), product.lower(), price, product_id))
+    
+    conn.commit()
+    cur.close()
+    conn.close()
+    return {'message': 'Product updated successfully'}, 200
+
 if __name__ == '__main__':
     init_db()
     app.run(host="0.0.0.0", port=os.getenv("PORT"))

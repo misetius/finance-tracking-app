@@ -72,3 +72,22 @@ def test_delete_product():
 
     assert response.status_code == 200
     assert len(s.get("http://localhost:8000").json()["data"]) == 2
+
+def test_change_product_price():
+    s = requests.Session()
+    response_id = s.get("http://localhost:8000").json()["data"][0]["id"]
+    update_url = f"http://localhost:8000/update-product/{response_id}"
+
+    payload = {
+        "category": "Drinks",
+        "product": "Tea",
+        "price": 4.99 
+    }
+
+    response = s.put(update_url, json=payload)
+
+    changed_response = s.get("http://localhost:8000").json()["data"][0]
+    assert changed_response["price"] == 4.99
+
+
+    assert response.status_code == 200
