@@ -86,8 +86,10 @@ def test_change_product_price():
 
     response = s.put(update_url, json=payload)
 
-    changed_response = s.get("http://localhost:8000").json()["data"][0]
+    
+
+    print(response.json())
+
+    changed_response = s.get("http://localhost:8000").json()["data"][1]
     assert changed_response["price"] == 4.99
-
-
     assert response.status_code == 200
