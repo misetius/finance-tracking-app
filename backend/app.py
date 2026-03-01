@@ -94,7 +94,9 @@ def add_data_to_table():
 
 @app.route('/sums-by-category', methods=['GET'])
 def get_sums_by_category():
-    response = requests.get(os.getenv("ANALYSIS_SERVICE_URL") + "/sums-by-category")
+    data = request.get_json()
+    year = data.get("year")
+    response = requests.get(os.getenv("ANALYSIS_SERVICE_URL") + "/sums-by-category", params={"year": year})
     return jsonify(response.json())
 
 

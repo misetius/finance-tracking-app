@@ -1,5 +1,6 @@
 import pytest
 import requests
+from datetime import datetime
 
 def test_get_all_products_without_data():
     s = requests.Session()
@@ -44,7 +45,8 @@ def test_get_all_products():
     assert data["data"][1]["product"] == "coffee"
     assert data["data"][1]["price"] == 3.99
     
-def test_calculate_sums_by_category():
+def test_calculate_sums_by_category_with_year():
+    current_year = datetime.now().year
     s = requests.Session()
 
     payload = {
@@ -56,7 +58,8 @@ def test_calculate_sums_by_category():
 
     sum_url = "http://localhost:8000/sums-by-category"
     
-    response = s.get(sum_url)
+    response = s.get(sum_url, json={"year": current_year})
+
     assert response.status_code == 200
     data = response.json()
     print(data)

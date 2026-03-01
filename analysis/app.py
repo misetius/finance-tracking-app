@@ -23,13 +23,17 @@ def check_health():
 
 @app.route('/sums-by-category', methods=['GET'])
 def get_sums_by_category():
+    data = request.get_json()
+    year = data.get("year")
+
+
     conn = psycopg2.connect(database=os.getenv("DATABASE_NAME"), user=os.getenv("DATABASE_USER"),
                         password=os.getenv("DATABASE_PASSWORD"), host=os.getenv("DATABASE_HOST"), port=os.getenv("DATABASE_PORT"))
 
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute("""
-        SELECT category, SUM(price) as total_price FROM products GROUP BY category;
-    """)
+        SELECT category, SUM(price) as total_price FROM products WHERE EXTRACT(YEAR FROM created_at) = %s GROUP BY category;
+    """, (year,))
     rows = cur.fetchall()
     cur.close()
     conn.close()
