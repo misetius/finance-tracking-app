@@ -96,7 +96,9 @@ def add_data_to_table():
 def get_sums_by_category():
     data = request.get_json()
     year = data.get("year")
-    response = requests.get(os.getenv("ANALYSIS_SERVICE_URL") + "/sums-by-category", params={"year": year})
+    print(f"Requesting sums by category for year: {year}")
+    payload = {"year": year}
+    response = requests.get(os.getenv("ANALYSIS_SERVICE_URL") + "/sums-by-category", json=payload)
     return jsonify(response.json())
 
 

@@ -35,6 +35,7 @@ def get_sums_by_category():
         SELECT category, SUM(price) as total_price FROM products WHERE EXTRACT(YEAR FROM created_at) = %s GROUP BY category;
     """, (year,))
     rows = cur.fetchall()
+    print(f"Calculated sums by category for year {year}: {rows}")
     cur.close()
     conn.close()
     return jsonify({'data': rows})
