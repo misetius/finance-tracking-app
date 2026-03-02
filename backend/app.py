@@ -47,7 +47,8 @@ def init_db():
             category varchar(100),
             product varchar(100),
             price float,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            year int,
+            month int
         );
     """)
 
@@ -86,7 +87,7 @@ def add_data_to_table():
     price = data.get("price")
 
 
-    cur.execute("INSERT INTO products (category, product, price) VALUES (%s, %s, %s)", (category.lower(), product.lower(), price))
+    cur.execute("INSERT INTO products (category, product, price, year, month) VALUES (%s, %s, %s, %s, %s)", (category.lower(), product.lower(), price, data.get("year"), data.get("month")))
     conn.commit()
     cur.close()
     conn.close()

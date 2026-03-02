@@ -32,7 +32,7 @@ def get_sums_by_category():
 
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute("""
-        SELECT category, SUM(price) as total_price FROM products WHERE EXTRACT(YEAR FROM created_at) = %s GROUP BY category;
+        SELECT category, SUM(price) as total_price FROM products WHERE year = %s GROUP BY category;
     """, (year,))
     rows = cur.fetchall()
     print(f"Calculated sums by category for year {year}: {rows}")
