@@ -1,14 +1,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: production
 resources:
-- ../base/
+- ../../base
 
-namePrefix: production-
+
+
 
 images:
-- name: PROJECT/IMAGE
+- name: analysis/image
+  newName: misetius/analysis
+  newTag: 4b64cd4d9dc51c95acb2b6485919c8902540ccff
+- name: backend/image
   newName: misetius/backend
-  newTag: latest
+  newTag: 4b64cd4d9dc51c95acb2b6485919c8902540ccff
+- name: frontend/image
+  newName: misetius/frontend
   
 
 

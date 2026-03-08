@@ -14,3 +14,5 @@ images:
 - name: backend/image
   newName: misetius/backend
   newTag: 4b64cd4d9dc51c95acb2b6485919c8902540ccff
+- name: frontend/image
+  newName: misetius/frontend

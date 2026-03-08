@@ -1,4 +1,3 @@
 argocd*
-frontend*
 delete-images.sh
 build-and-push.sh

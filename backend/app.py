@@ -1,11 +1,14 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
 import time
 import psycopg2
 import psycopg2.extras
 import os
 
+
 app = Flask(__name__)
+CORS(app)
 
 env = os.environ.get("DEVELOPMENT_OR_PRODUCTION")
 
@@ -70,6 +73,7 @@ def get_all_data_from_tables():
     rows = cur.fetchall()
     cur.close()
     conn.close()
+    print(jsonify({'data': rows}))
     return jsonify({'data': rows})
 
 
@@ -85,9 +89,11 @@ def add_data_to_table():
     category = data.get("category") 
     product = data.get("product")
     price = data.get("price")
+    year = time.localtime().tm_year
+    month = time.localtime().tm_mon
 
 
-    cur.execute("INSERT INTO products (category, product, price, year, month) VALUES (%s, %s, %s, %s, %s)", (category.lower(), product.lower(), price, data.get("year"), data.get("month")))
+    cur.execute("INSERT INTO products (category, product, price, year, month) VALUES (%s, %s, %s, %s, %s)", (category.lower(), product.lower(), price, year, month))
     conn.commit()
     cur.close()
     conn.close()
@@ -95,11 +101,10 @@ def add_data_to_table():
 
 @app.route('/sums-by-category', methods=['GET'])
 def get_sums_by_category():
-    data = request.get_json()
-    year = data.get("year")
-    print(f"Requesting sums by category for year: {year}")
-    payload = {"year": year}
-    response = requests.get(os.getenv("ANALYSIS_SERVICE_URL") + "/sums-by-category", json=payload)
+    year = request.args.get("year")
+    if not year:
+        year = 2026 # Hardcoded for testing purposes
+    response = requests.get(os.getenv("ANALYSIS_SERVICE_URL") + "/sums-by-category", params={"year": year})
     return jsonify(response.json())
 
 

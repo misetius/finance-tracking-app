@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finance-web-app-frontend
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: finance-web-app-frontend
+  template:
+    metadata:
+      labels:
+        app: finance-web-app-frontend
+    spec:
+      containers: 
+        - name: frontend
+          image: frontend/image
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: "3000"

@@ -1,4 +1,10 @@
 services:
+  frontend:
+    image: misetius/frontend:development-test
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend:8000
   backend:
     image: misetius/backend:development-test
     ports:

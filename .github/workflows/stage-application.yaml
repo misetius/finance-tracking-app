@@ -47,7 +47,7 @@ jobs:
           pytest tests/api/test_api_endpoints.py
       
 
-  build-publish:
+  build-publish-staging-version:
     needs: test-on-docker-compose
     name: Build, Push, Release, Exercise
     runs-on: ubuntu-latest
@@ -72,6 +72,11 @@ jobs:
           docker build --target development --tag "misetius/analysis:$GITHUB_SHA" analysis
           docker push "misetius/analysis:$GITHUB_SHA"
 
+      - name: Build and publish frontend image
+        run: |-
+          docker build --target development --tag "misetius/frontend:$GITHUB_SHA" frontend
+          docker push "misetius/frontend:$GITHUB_SHA"
+
       - name: Set up Kustomize
         uses: imranismail/setup-kustomize@v2
       # update the image in the kustomization.yaml to use the new image with the GitHub SHA tag
@@ -79,6 +84,8 @@ jobs:
         run: cd overlays/staging && kustomize edit set image backend/image=misetius/backend:$GITHUB_SHA 
       - name: Use right image for analysis in staging
         run: cd overlays/staging && kustomize edit set image analysis/image=misetius/analysis:$GITHUB_SHA
+      - name: Use right image for frontend in staging
+        run: cd overlays/staging && kustomize edit set image frontend/image=misetius/frontend:$GITHUB_SHA
           
       - name: commit kustomization.yaml to GitHub
         uses: EndBug/add-and-commit@v9

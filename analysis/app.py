@@ -23,10 +23,9 @@ def check_health():
 
 @app.route('/sums-by-category', methods=['GET'])
 def get_sums_by_category():
-    data = request.get_json()
-    year = data.get("year")
-
-
+    year = request.args.get("year")
+    if not year:
+        year = 2026 # Hardcoded for testing purposes
     conn = psycopg2.connect(database=os.getenv("DATABASE_NAME"), user=os.getenv("DATABASE_USER"),
                         password=os.getenv("DATABASE_PASSWORD"), host=os.getenv("DATABASE_HOST"), port=os.getenv("DATABASE_PORT"))
 
