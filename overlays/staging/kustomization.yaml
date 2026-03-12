@@ -16,4 +16,4 @@ images:
   newTag: ca2646c60eb22ee419bfbd447d1c742c7c3931ae
 - name: frontend/image
   newName: misetius/frontend
-  newTag: ca2646c60eb22ee419bfbd447d1c742c7c3931ae
+  newTag: e189641bc66f3d7bacbe72159746e0e2a5fd6259
