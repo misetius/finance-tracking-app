@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://backend-svc:2345';
 
 const fetchCategorySumsForYear = async (year) => {
   const payload = { year: year };
