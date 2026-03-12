@@ -1,8 +1,8 @@
 const productForm = (props) => {
     return (
-        <div>
+        <div class="container">
             <h3>Add a new product</h3>
-        <form onSubmit={props.addProduct}>
+        <form onSubmit={props.addProduct} >
             <div>
                 <label htmlFor="name">Product Name:</label>
                 <input type="text" id="name" name="name" required onChange={props.onNameChange} />

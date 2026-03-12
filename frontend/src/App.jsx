@@ -3,13 +3,8 @@ import chartservice from '../services/chart_data'
 import ProductForm from '../components/add_product_form'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
+import Product from '../components/ten_recently_added_products';
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-
-
-
-
-
 
 
 const App = () => {
@@ -17,6 +12,7 @@ const [categorySpending, setCategorySpending] = useState([]);
 const [category, setCategory] = useState('');
 const [price, setPrice] = useState('');
 const [name, setName] = useState('');
+const [recentProducts, setRecentProducts] = useState([]);
 
 
 useEffect(() => {
@@ -28,6 +24,13 @@ useEffect(() => {
     })
     .catch(error => {
       console.error("Error fetching category spending data:", error);
+    });
+  chartservice.getTenRecentlyAddedProducts()
+    .then(data => {
+      setRecentProducts(data);
+    })
+    .catch(error => {
+      console.error("Error fetching recently added products:", error);
     });
 }, []);
 
@@ -79,7 +82,6 @@ const addProduct = async (event) => {
     product: name,
     price: parseFloat(price)
   };
-
   try {
     await chartservice.addNewProduct(newProduct);
     console.log("Product added successfully:", newProduct);
@@ -89,20 +91,32 @@ const addProduct = async (event) => {
     console.error("Error adding product:", error);
   }
 }
+  
+const deleteProduct = async (productId) => {
+    try {
+      await chartservice.deleteProduct(productId);
+      setRecentProducts(recentProducts.filter(product => product.id !== productId));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
+
 
 return(
-  <div>
-    
+  <div style={{ display: "flex", justifyContent: "center" }}>
+   <div style={{ width: "400px" }}> 
     <h1>Finance Tracking App</h1>
     <h2>Spending by Category For the Year</h2>
     <Pie  data={datasetsForCategories} />
     <ProductForm addProduct={addProduct} onNameChange={onNameChange} onPriceChange={onPriceChange} onCategoryChange={onCategoryChange} />
-      
+    <h3>10 Recently Added Products (Click to Delete)</h3>
+      {recentProducts.map(product => (
+        <Product key={product.id} product={product} deleteProduct={() => deleteProduct(product.id)} />
+      ))}
+  </div>
   </div>
 )
-
-
-
 }
 
 

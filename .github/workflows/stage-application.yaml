@@ -32,6 +32,11 @@ jobs:
           docker build --target development --tag "misetius/analysis:development-test" analysis
           docker push "misetius/analysis:development-test"
 
+      - name: Build and push Docker image for frontend
+        run: |-
+          docker build --target development --tag "misetius/frontend:development-test" frontend
+          docker push "misetius/frontend:development-test"
+
       - name: Set up Docker Compose
         run: |-
           docker compose -f docker-compose.yaml up -d

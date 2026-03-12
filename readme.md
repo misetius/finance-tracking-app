@@ -5,7 +5,6 @@ This project is created for learning purposes, with a focus on practicing **Dock
 
 ---
 
-## THIS APP IS IN DEVELOPMENT AT THE MOMENT
 
 You can quickly try the app with docker compose file. For this you obviously need to have installed docker.
 

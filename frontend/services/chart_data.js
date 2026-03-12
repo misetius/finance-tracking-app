@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "http://localhost:8000";
+const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
 const fetchCategorySumsForYear = async (year) => {
   const payload = { year: year };
@@ -34,8 +34,32 @@ const updateProduct = async (productId, updatedData) => {
   }
 };
 
+const getTenRecentlyAddedProducts = async () => {
+  try {
+    const response = await axios.get(`${API_URL}`);
+    const tenProducts = response.data;
+    return tenProducts.data
+    
+  } catch (error) {
+    console.error("Error fetching ten recently added products:", error);
+    throw error;
+  }
+};
+
+const deleteProduct = async (productId) => {
+  try {
+    const response = await axios.delete(`${API_URL}/delete-product/${productId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw error;
+  }
+};
+
 export default {
   fetchCategorySumsForYear,
   addNewProduct,
-  updateProduct
+  updateProduct,
+  getTenRecentlyAddedProducts,
+  deleteProduct
 };
