@@ -5,7 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: analysis
+    app: finance-web-app-analysis
   ports:
     - port: 2346
       protocol: TCP

@@ -60,9 +60,11 @@ def init_db():
     conn.close()
     print("Table ensured.")
 
-
-
 @app.route('/')
+def check():
+    return "<p>Hello</p>"
+
+@app.route('/api/get-all', methods=['GET'])
 def get_all_data_from_tables():
 
     conn = psycopg2.connect(database=os.getenv("DATABASE_NAME"), user=os.getenv("DATABASE_USER"),
@@ -77,7 +79,7 @@ def get_all_data_from_tables():
     return jsonify({'data': rows})
 
 
-@app.route('/add-product', methods=['POST'])
+@app.route('/api/add-product', methods=['POST'])
 def add_data_to_table():
 
 
@@ -99,7 +101,7 @@ def add_data_to_table():
     conn.close()
     return {'message': 'Product added successfully'}, 201
 
-@app.route('/sums-by-category', methods=['GET'])
+@app.route('/api/sums-by-category', methods=['GET'])
 def get_sums_by_category():
     year = request.args.get("year")
     if not year:
@@ -108,7 +110,7 @@ def get_sums_by_category():
     return jsonify(response.json())
 
 
-@app.route('/delete-product/<int:product_id>', methods=['DELETE'])
+@app.route('/api/delete-product/<int:product_id>', methods=['DELETE'])
 def delete_product(product_id):
     conn = psycopg2.connect(database=os.getenv("DATABASE_NAME"), user=os.getenv("DATABASE_USER"),
                         password=os.getenv("DATABASE_PASSWORD"), host=os.getenv("DATABASE_HOST"), port=os.getenv("DATABASE_PORT"))

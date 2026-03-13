@@ -14,6 +14,9 @@ You can run this file with command while in the same directory as the file on th
 docker compose up
 ```
 
+After this you can access the app from localhost with the browser
+
+
 ---
 
 ##  Overview

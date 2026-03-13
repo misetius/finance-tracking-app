@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finance-web-app-nginx
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: finance-web-app-nginx
+  template:
+    metadata:
+      labels:
+        app: finance-web-app-nginx
+    spec:
+      containers: 
+        - name: nginx
+          image: misetius/finance-nginx:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+
+          
+
+      

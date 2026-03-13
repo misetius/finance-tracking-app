@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://backend-svc:2345';
+const API_URL = '/api';
 
 const fetchCategorySumsForYear = async (year) => {
   const payload = { year: year };
@@ -36,7 +36,7 @@ const updateProduct = async (productId, updatedData) => {
 
 const getTenRecentlyAddedProducts = async () => {
   try {
-    const response = await axios.get(`${API_URL}`);
+    const response = await axios.get(`${API_URL}/get-all`);
     const tenProducts = response.data;
     return tenProducts.data
     
