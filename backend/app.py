@@ -123,7 +123,7 @@ def delete_product(product_id):
     return {'message': 'Product deleted successfully'}, 200
 
 
-@app.route('/update-product/<int:product_id>', methods=['PUT'])
+@app.route('/api/update-product/<int:product_id>', methods=['PUT'])
 def update_product(product_id):
     conn = psycopg2.connect(database=os.getenv("DATABASE_NAME"), user=os.getenv("DATABASE_USER"),
                         password=os.getenv("DATABASE_PASSWORD"), host=os.getenv("DATABASE_HOST"), port=os.getenv("DATABASE_PORT"))
