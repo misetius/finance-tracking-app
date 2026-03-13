@@ -4,8 +4,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - REACT_APP_BACKEND_URL=http://backend:8000
-      - VITE_BACKEND_URL=http://backend:8000
+      - VITE_BACKEND_URL=/api
   backend:
     image: misetius/backend:development-test
     ports:
@@ -33,6 +32,18 @@ services:
     depends_on:
       - postgres
 
+  nginx:
+    image: nginx:latest
+    volumes:
+      - type: bind
+        source: ./nginx/nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+        read_only: true
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
 
   postgres:
     image: postgres:15-alpine
