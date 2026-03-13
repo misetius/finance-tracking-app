@@ -74,7 +74,7 @@ def test_calculate_sums_by_category_with_year():
 def test_delete_product():
     s = requests.Session()
     response_id = s.get("http://localhost:8000/api/get-all").json()["data"][0]["id"]
-    delete_url = f"http://localhost:8000/delete-product/{response_id}"
+    delete_url = f"http://localhost:8000/api/delete-product/{response_id}"
     response = s.delete(delete_url)
 
     assert response.status_code == 200
@@ -85,7 +85,7 @@ def test_change_product_price():
     year = datetime.now().year
     month = datetime.now().month
     response_id = s.get("http://localhost:8000/api/get-all").json()["data"][0]["id"]
-    update_url = f"http://localhost:8000/update-product/{response_id}"
+    update_url = f"http://localhost:8000/api/update-product/{response_id}"
 
     payload = {
         "category": "Drinks",
