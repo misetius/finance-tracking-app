@@ -13,7 +13,7 @@ def test_get_all_products_without_data():
 def test_add_product():
     s = requests.Session()
 
-    url = "http://localhost:8000/add-product"
+    url = "http://localhost:8000/api/add-product"
     payload = {
         "category": "Electronics",
         "product": "Smartphone",
@@ -26,8 +26,8 @@ def test_add_product():
 
 def test_get_all_products():
     s = requests.Session()
-    get_url = "http://localhost:8000"
-    post_url = "http://localhost:8000/add-product"
+    get_url = "http://localhost:8000/api/get-all"
+    post_url = "http://localhost:8000/api/add-product"
 
     payload = {
         "category": "Drinks",
@@ -56,9 +56,9 @@ def test_calculate_sums_by_category_with_year():
         "product": "Tea",
         "price": 2.99,
     }
-    s.post("http://localhost:8000/add-product", json=payload)
+    s.post("http://localhost:8000/api/add-product", json=payload)
 
-    sum_url = "http://localhost:8000/sums-by-category"
+    sum_url = "http://localhost:8000/api/sums-by-category"
 
     print(current_year)
     
@@ -73,18 +73,18 @@ def test_calculate_sums_by_category_with_year():
 
 def test_delete_product():
     s = requests.Session()
-    response_id = s.get("http://localhost:8000").json()["data"][0]["id"]
+    response_id = s.get("http://localhost:8000/api/get-all").json()["data"][0]["id"]
     delete_url = f"http://localhost:8000/delete-product/{response_id}"
     response = s.delete(delete_url)
 
     assert response.status_code == 200
-    assert len(s.get("http://localhost:8000").json()["data"]) == 2
+    assert len(s.get("http://localhost:8000/api/get-all").json()["data"]) == 2
 
 def test_change_product_price():
     s = requests.Session()
     year = datetime.now().year
     month = datetime.now().month
-    response_id = s.get("http://localhost:8000").json()["data"][0]["id"]
+    response_id = s.get("http://localhost:8000/api/get-all").json()["data"][0]["id"]
     update_url = f"http://localhost:8000/update-product/{response_id}"
 
     payload = {
@@ -99,6 +99,6 @@ def test_change_product_price():
 
     #print(response.json())
 
-    changed_response = s.get("http://localhost:8000").json()["data"][1]
+    changed_response = s.get("http://localhost:8000/api/get-all").json()["data"][1]
     assert changed_response["price"] == 4.99
     assert response.status_code == 200
