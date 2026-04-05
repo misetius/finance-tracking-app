@@ -9,12 +9,11 @@ FROM base AS development
 COPY app.py .
 RUN pip install debugpy
 ENV FLASK_ENV=development
-
-
-
 CMD ["python","app.py" ]
 
 # ---------- Production ----------
 FROM base AS production
+COPY app.py .
+COPY wsgi.py .
 ENV FLASK_ENV=production
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8001", "--workers", "4"]
+CMD ["gunicorn", "wsgi:app", "--bind", "0.0.0.0:3002", "--workers", "4"]

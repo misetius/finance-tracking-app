@@ -1,4 +1,4 @@
-# Finance Tracking App
+# Finance Tracking App (in development but basic features work and app can be tested)
 
 A full-stack finance tracking application built with **Flask** (backend) and **React** (frontend).  
 This project is created for learning purposes, with a focus on practicing **Docker** and **Kubernetes** deployment.

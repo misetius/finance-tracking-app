@@ -12,3 +12,15 @@ COPY . .
 EXPOSE 3000
 CMD ["npm", "run", "dev"]
 
+FROM base AS production
+
+COPY . .
+
+RUN npm install
+
+RUN npm install -g serve
+
+RUN npm run build
+
+CMD [ "serve", "-s", "dist" ]
+

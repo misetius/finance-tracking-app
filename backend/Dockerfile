@@ -14,4 +14,7 @@ CMD ["python", "app.py" ]
 # ---------- Production ----------
 FROM base AS production
 ENV FLASK_ENV=production
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8000", "--workers", "4"]
+COPY app.py .
+COPY wsgi.py .
+ENV FLASK_ENV=production
+CMD ["gunicorn", "wsgi:app", "--bind", "0.0.0.0:3001", "--workers", "4"]

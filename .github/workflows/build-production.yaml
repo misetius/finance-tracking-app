@@ -1,0 +1,50 @@
+name: Build production version
+on:
+    push:
+        tags:
+            - 'v*.*.*'
+
+jobs:
+    build-publish-production-version:
+        name: Build, Push, Release, Exercise
+        runs-on: ubuntu-latest
+    
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            
+            - name: Login to Docker Hub
+              uses: docker/login-action@v3
+              with:
+                username: ${{ secrets.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
+            - name: Build and push Docker image for backend
+              run: |-
+               docker build --target production --tag "misetius/backend:${GITHUB_REF#refs/tags/}" backend
+               docker push "misetius/backend:${GITHUB_REF#refs/tags/}"
+    
+            - name: Build and push Docker image for analysis
+              run: |-
+               docker build --target production --tag "misetius/analysis:${GITHUB_REF#refs/tags/}" analysis
+               docker push "misetius/analysis:${GITHUB_REF#refs/tags/}"
+    
+            - name: Build and push Docker image for frontend
+              run: |-
+               docker build --target production --tag "misetius/frontend:${GITHUB_REF#refs/tags/}" frontend
+               docker push "misetius/frontend:${GITHUB_REF#refs/tags/}"
+
+    
+            - name: Use right image for backend in staging
+              run: cd overlays/production && kustomize edit set image backend/image=misetius/backend:${GITHUB_REF#refs/tags/}
+            - name: Use right image for analysis in staging
+              run: cd overlays/production && kustomize edit set image analysis/image=misetius/analysis:${GITHUB_REF#refs/tags/}
+            - name: Use right image for frontend in staging
+              run: cd overlays/production && kustomize edit set image frontend/image=misetius/frontend:${GITHUB_REF#refs/tags/}
+          
+            - name: commit kustomization.yaml to GitHub
+              uses: EndBug/add-and-commit@v9
+              with:
+                add: 'kustomization.yaml'
+                message: New version released ${{ github.ref }}
+                cwd: 'overlays/production'
