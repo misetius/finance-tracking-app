@@ -41,3 +41,16 @@ jobs:
               run: cd overlays/production && kustomize edit set image analysis/image=misetius/analysis:${GITHUB_REF#refs/tags/}
             - name: Use right image for frontend in production
               run: cd overlays/production && kustomize edit set image frontend/image=misetius/frontend:${GITHUB_REF#refs/tags/}
+            
+            
+            - name: 'Checkout'
+              uses: actions/checkout@master
+            - name: 'Kustomize Build'
+              uses: karancode/kustomize-github-action@master
+              with:
+                kustomize_version: '3.0.0'
+                kustomize_build_dir: 'overlays/production'
+                kustomize_comment: false
+                kustomize_output_file: "overlays/production/kustomization.yaml"
+                kustomize_build_options: "--load_restrictor none"
+                enable_alpha_plugins: true
