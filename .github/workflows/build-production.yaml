@@ -35,16 +35,9 @@ jobs:
                docker push "misetius/frontend:${GITHUB_REF#refs/tags/}"
 
     
-            - name: Use right image for backend in staging
+            - name: Use right image for backend in production
               run: cd overlays/production && kustomize edit set image backend/image=misetius/backend:${GITHUB_REF#refs/tags/}
-            - name: Use right image for analysis in staging
+            - name: Use right image for analysis in production
               run: cd overlays/production && kustomize edit set image analysis/image=misetius/analysis:${GITHUB_REF#refs/tags/}
-            - name: Use right image for frontend in staging
+            - name: Use right image for frontend in production
               run: cd overlays/production && kustomize edit set image frontend/image=misetius/frontend:${GITHUB_REF#refs/tags/}
-          
-            - name: commit kustomization.yaml to GitHub
-              uses: EndBug/add-and-commit@v9
-              with:
-                add: 'kustomization.yaml'
-                message: New version released ${{ github.ref }}
-                cwd: 'overlays/production'
