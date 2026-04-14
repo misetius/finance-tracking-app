@@ -21,26 +21,26 @@ jobs:
     
             - name: Build and push Docker image for backend
               run: |-
-               docker build --target production --tag "misetius/backend:${GITHUB_REF#refs/tags/}" backend
-               docker push "misetius/backend:${GITHUB_REF#refs/tags/}"
+               docker build --target production --tag "misetius/backend:${GITHUB_SHA}" backend
+               docker push "misetius/backend:${GITHUB_SHA}"
     
             - name: Build and push Docker image for analysis
               run: |-
-               docker build --target production --tag "misetius/analysis:${GITHUB_REF#refs/tags/}" analysis
-               docker push "misetius/analysis:${GITHUB_REF#refs/tags/}"
+               docker build --target production --tag "misetius/analysis:${GITHUB_SHA}" analysis
+               docker push "misetius/analysis:${GITHUB_SHA}"
     
             - name: Build and push Docker image for frontend
               run: |-
-               docker build --target production --tag "misetius/frontend:${GITHUB_REF#refs/tags/}" frontend
-               docker push "misetius/frontend:${GITHUB_REF#refs/tags/}"
+               docker build --target production --tag "misetius/frontend:${GITHUB_SHA}" frontend
+               docker push "misetius/frontend:${GITHUB_SHA}"
 
     
             - name: Use right image for backend in production
-              run: cd overlays/production && kustomize edit set image backend/image=misetius/backend:${GITHUB_REF#refs/tags/}
+              run: cd overlays/production && kustomize edit set image backend/image=misetius/backend:${GITHUB_SHA}
             - name: Use right image for analysis in production
-              run: cd overlays/production && kustomize edit set image analysis/image=misetius/analysis:${GITHUB_REF#refs/tags/}
+              run: cd overlays/production && kustomize edit set image analysis/image=misetius/analysis:${GITHUB_SHA}
             - name: Use right image for frontend in production
-              run: cd overlays/production && kustomize edit set image frontend/image=misetius/frontend:${GITHUB_REF#refs/tags/}
+              run: cd overlays/production && kustomize edit set image frontend/image=misetius/frontend:${GITHUB_SHA}
             
             
             - name: 'Checkout'
