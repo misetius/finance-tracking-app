@@ -43,14 +43,9 @@ jobs:
               run: cd overlays/production && kustomize edit set image frontend/image=misetius/frontend:${GITHUB_SHA}
             
             
-            - name: 'Checkout'
-              uses: actions/checkout@master
-            - name: 'Kustomize Build'
-              uses: karancode/kustomize-github-action@master
+            - name: commit kustomization.yaml to GitHub
+              uses: EndBug/add-and-commit@v9
               with:
-                kustomize_version: '5.7.1'
-                kustomize_build_dir: 'overlays/production'
-                kustomize_comment: false
-                kustomize_output_file: "overlays/production/kustomization.yaml"
-                kustomize_build_options: "--load_restrictor none"
-                enable_alpha_plugins: false
+                add: 'kustomization.yaml'
+                message: New version released ${{ github.sha }}
+                cwd: 'overlays/production'
