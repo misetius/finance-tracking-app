@@ -49,3 +49,5 @@ jobs:
                 add: 'kustomization.yaml'
                 message: New version released ${{ github.sha }}
                 cwd: 'overlays/production'
+                tag_push: '--force'
+                push: origin HEAD:main
