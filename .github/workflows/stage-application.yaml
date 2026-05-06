@@ -49,7 +49,7 @@ jobs:
       - name: Run tests
         run: |
           source venv/bin/activate
-          pytest tests/api/test_api_endpoints.py
+          pytest backend/tests/api/test_api_endpoints.py
       
 
   build-publish-staging-version:
