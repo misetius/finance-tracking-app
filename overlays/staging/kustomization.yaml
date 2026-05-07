@@ -10,10 +10,10 @@ resources:
 images:
 - name: analysis/image
   newName: misetius/analysis
-  newTag: bf7a13a24bc0bee20f9b8f64166363824857566c
+  newTag: 5172bcd5a74aeb06e7c995e4154ecd58af76de48
 - name: backend/image
   newName: misetius/backend
-  newTag: bf7a13a24bc0bee20f9b8f64166363824857566c
+  newTag: 5172bcd5a74aeb06e7c995e4154ecd58af76de48
 - name: frontend/image
   newName: misetius/frontend
-  newTag: bf7a13a24bc0bee20f9b8f64166363824857566c
+  newTag: 5172bcd5a74aeb06e7c995e4154ecd58af76de48
