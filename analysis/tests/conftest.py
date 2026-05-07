@@ -1,8 +1,9 @@
 import pytest
 from testcontainers.postgres import PostgresContainer
 import os
-from backend.app import app
-from backend.app import init_db
+from analysis.app import app
+from analysis.tests.create_database_with_table import init_db
+
 
 
 

@@ -7,7 +7,44 @@ on:
 
 
 jobs:
+  # Since integrations are often reason for failed production builds, we want to run them 
+  # quickly before the api tests. This helps us catch issues early.
+  test-integration-on-backend:
+    name: Run integration tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
+      - name: Set up Python
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install pytest requests psycopg2-binary
+
+      - name: Run tests
+        run: |
+          source venv/bin/activate
+          pytest backend/tests/integration/test_integration.py
+  
+  test-integration-on-analysis:
+    name: Run integration tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install pytest requests psycopg2-binary
+
+      - name: Run tests
+        run: |
+          source venv/bin/activate
+          pytest analysis/tests/integration/test_integration.py
+          
   test-on-docker-compose:
     name: Test on docker compose
     runs-on: ubuntu-latest
